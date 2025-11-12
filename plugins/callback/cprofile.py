@@ -112,7 +112,6 @@ except ImportError:
 import ansible
 from ansible.errors import AnsibleError
 from ansible.executor.process.worker import WorkerProcess
-from ansible.module_utils.six import PY3
 from ansible.playbook.block import Block
 from ansible.plugins.callback import CallbackBase
 
@@ -233,19 +232,15 @@ class CallbackModule(CallbackBase):
     def __init__(self, display=None):
         super(CallbackModule, self).__init__(display)
 
-        if not PY3:
-            display.warning('The cprofile callback plugin requires Python3')
-            self.disabled = True
-        else:
-            self._worker_tmp = tempfile.mkdtemp()
+        self._worker_tmp = tempfile.mkdtemp()
 
-            p = sys.getprofile()
-            # Profiler may have been started by `python -m cProfile`
-            # or the cprofile inventory plugin
-            if not isinstance(p, _lsprof.Profiler):
-                p = cProfile.Profile()
-                p.enable()
-            self._p = p
+        p = sys.getprofile()
+        # Profiler may have been started by `python -m cProfile`
+        # or the cprofile inventory plugin
+        if not isinstance(p, _lsprof.Profiler):
+            p = cProfile.Profile()
+            p.enable()
+        self._p = p
 
     def _wrap_worker(self):
         WorkerProcess.run = self._profile_worker(WorkerProcess.run)

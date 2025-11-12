@@ -10,7 +10,6 @@ import json
 
 from ansible.errors import AnsibleFilterError
 from ansible.module_utils.common.text.converters import to_native, to_text
-from ansible.module_utils.six import text_type
 from ansible.parsing.ajson import AnsibleJSONEncoder
 
 from jinja2 import Undefined
@@ -53,7 +52,7 @@ def do_jq(value, expression, text=False, multiple=False):
         )
 
     kwargs = {}
-    if isinstance(value, text_type):
+    if isinstance(value, str):
         kwargs['text'] = value
     else:
         kwargs['text'] = json.dumps(value, cls=AnsibleJSONEncoder)

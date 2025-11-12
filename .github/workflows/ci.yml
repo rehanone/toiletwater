@@ -21,14 +21,14 @@ jobs:
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.11
+          python-version: 3.13
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
@@ -54,17 +54,17 @@ jobs:
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         python-version:
-          - 3.11
+          - 3.13
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.11
+          python-version: 3.13
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
@@ -90,17 +90,17 @@ jobs:
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
-          - alpine3
+          - alpine321
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.11
-        uses: actions/setup-python@v2
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.11
+          python-version: 3.13
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |

@@ -6,23 +6,23 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 import copy
+import configparser
 
 
+from io import StringIO
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
 from ansible.module_utils._text import to_text
 from ansible.module_utils.common._collections_compat import MutableMapping
-from ansible.module_utils.six import string_types
-from ansible.module_utils.six.moves import configparser, StringIO
 
 
 def from_ini(o):
-    if not isinstance(o, string_types):
+    if not isinstance(o, str):
         raise AnsibleFilterError('from_ini requires a string, got %s' % type(o))
     parser = configparser.RawConfigParser()
     parser.optionxform = partial(to_text, errors='surrogate_or_strict')
-    parser.readfp(StringIO(o))
+    parser.read_file(StringIO(o))
     d = dict(parser._sections)
     for k in d:
         d[k] = dict(d[k])
